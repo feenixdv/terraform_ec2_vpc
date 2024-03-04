@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 jobs:
   terraform:
@@ -16,30 +17,47 @@ jobs:
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
-      working-directory: ./staging
       run:
-        shell: bash
-
+        working-directory: ./staging
+      
     steps:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v3
 
-    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1
-      with:
-        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+    # AWS login sections
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v3
+      with: 
+        role-to-assume: arn:aws:iam::484315828500:role/AssumeRoleWithWebIdentityAdmin
+        audience: sts.amazonaws.com
+        role-session-name: sessionfeenixdv
+        aws-region: us-east-1
+
+    - name: Print assume role name
+      run: aws sts get-caller-identity
+    
+    - name: List s3 bucket
+      run: aws s3 ls
+    
+    # - name: List s3 bucket
+    #   run: aws s3 ls
+    # # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+    # - name: Setup Terraform
+    #   uses: hashicorp/setup-terraform@v1
+    #   with:
+    #     cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
-    - name: Terraform Init
-      run: terraform init
+    # - name: Terraform Init
+    #   run: terraform init
+      #working-directory: ./staging
 
-    # Checks that all Terraform configuration files adhere to a canonical format
-    - name: Terraform Format
-      run: terraform fmt -check
+    # # Checks that all Terraform configuration files adhere to a canonical format
+    # - name: Terraform Format
+    #   run: terraform fmt -check
 
-    # # Generates an execution plan for Terraform
+    # Generates an execution plan for Terraform
     # - name: Terraform Plan
     #   run: terraform plan -input=false
 

@@ -31,6 +31,8 @@ resource "aws_subnet" "private" {
 
 locals {
   ssh_port = 22 #For the security purpose
+  app_port_http = 80
+  app_port_https = 443
 }
 
 resource "aws_security_group" "all_ssh" {
@@ -45,6 +47,19 @@ resource "aws_security_group" "all_ssh" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  ingress{
+    from_port = local.app_port_http
+    to_port   = local.app_port_http
+    protocol  = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress{
+    from_port = local.app_port_https
+    to_port   = local.app_port_https
+    protocol  = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
   egress {
     from_port = 0
     to_port   = 0

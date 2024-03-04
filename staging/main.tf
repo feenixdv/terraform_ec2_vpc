@@ -18,3 +18,14 @@ module "vpc_network" {
   private_subnet  = var.private_subnet_cidr_block
   env             = var.env
  }
+
+# module "lambda_create"{
+#   source          = "../modules/lambda"
+#   env             = var.env
+#   function_name   = var.env #Put env value in starting of name
+#   runtime         = var.py_runtime
+# }
+
+# output "lambda_url"{
+#   value = module.lambda_create.lambda_function_invoke_url
+# }
