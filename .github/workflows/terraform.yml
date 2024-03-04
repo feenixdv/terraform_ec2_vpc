@@ -2,7 +2,7 @@ name: 'Terraform to create vpc and ec2 instance'
 
 on:
   workflow_dispatch:
-    branches: [ "main" ]
+    branches: [ "qa" ]
   pull_request:
 
 permissions:
