@@ -1,35 +1,37 @@
-name: 'Testing the login functionality from OpenID.'4
+name: 'Testing the login functionality from OpenID'
+
 on:
- workflow_dispatch:
-    branches: [ "qa"]
- pull_request:
+  workflow_dispatch:
+    branches: [ "qa" ]
+  pull_request:
 
 permissions:
-    contents: read
-    id-token: write
+  contents: read
+  id-token: write
 
 jobs:
-    terraform:
-      name: 'aws login test'
-      runs-on: ubuntu-latest
-      environment: qa
+  terraform:
+    name: 'aws login'
+    runs-on: ubuntu-latest
+    environment: qa
+      
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v3
 
-      steps:
-        # Checkout the repository to the GitHub Actions runner
-        - name: Checkout
-          uses: actions/checkout@v3
+    # AWS login sections
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v3
+      with: 
+        role-to-assume: arn:aws:iam::484315828500:role/AssumeRoleWithWebIdentityAdmin
+        audience: sts.amazonaws.com
+        role-session-name: sessionfeenixdv
+        aws-region: us-east-1
+
+    - name: Print assume role name
+      run: aws sts get-caller-identity
     
-        # AWS login sections
-        - name: Configure AWS credentials
-          uses: aws-actions/configure-aws-credentials@v3
-          with: 
-            role-to-assume: arn:aws:iam::484315828500:role/AssumeRoleWithWebIdentityAdmin
-            audience: sts.amazonaws.com
-            role-session-name: sessionfeenixdv
-            aws-region: us-east-1
+    - name: List s3 bucket
+      run: aws s3 ls
     
-        - name: Print assume role name
-          run: aws sts get-caller-identity
-        
-        - name: List s3 bucket
-          run: aws s3 ls
