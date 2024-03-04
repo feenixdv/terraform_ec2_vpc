@@ -39,6 +39,15 @@ jobs:
     - name: Terraform Format
       run: terraform fmt -check
 
+    # Update Environment Files with Terraform output
+    - name: Set Terraform Output
+      run: echo "::set-env name=TF_OUTPUT::$(terraform output -json)"
+      working-directory: ./staging
+
+    # Display Terraform output
+    - name: Display Terraform Output
+      run: echo "${{ env.TF_OUTPUT }}"
+
     # # Generates an execution plan for Terraform
     # - name: Terraform Plan
     #   run: terraform plan -input=false
