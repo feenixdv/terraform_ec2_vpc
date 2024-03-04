@@ -32,6 +32,6 @@ jobs:
     - name: Print assume role name
       run: aws sts get-caller-identity
     
-    - name: List s3 bucket
+    - name: List s3 buckets
       run: aws s3 ls
     
