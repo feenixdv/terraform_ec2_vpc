@@ -37,6 +37,9 @@ jobs:
     - name: Print assume role name
       run: aws sts get-caller-identity
     
+    - name: List s3 bucket
+      run: aws s3 ls
+    
     # - name: List s3 bucket
     #   run: aws s3 ls
     # # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
