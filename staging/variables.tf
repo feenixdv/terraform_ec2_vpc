@@ -29,3 +29,8 @@ variable "env" {
 variable "vpc_tag" {
   default = "vpc-staging"
 }
+
+#Python variables
+variable "py_runtime"{
+  default = "python3.8"
+}
