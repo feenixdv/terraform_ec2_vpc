@@ -1,4 +1,4 @@
-name: 'Terraform vpc and ec2'
+name: 'Terraform Destroy'
 
 on:
   workflow_dispatch:
