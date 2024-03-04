@@ -1,4 +1,4 @@
-name: 'Testing the login functionality from OpenID'
+name: 'Testing OpenID'
 
 on:
   workflow_dispatch:
