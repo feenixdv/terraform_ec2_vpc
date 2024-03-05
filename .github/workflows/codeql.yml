@@ -88,7 +88,7 @@ jobs:
       with:
         soft_fail: true
     - name: Download a single artifact
-      run: echo $ {{ steps.tfsec_out.output }} >> tfsec_out.txt
+      run: echo ${{ steps.tfsec_out.output }} >> tfsec_out.txt
     
     - name: Download artifact
       uses: actions/download-artifact@v4
