@@ -82,6 +82,4 @@ jobs:
         category: "/language:${{matrix.language}}"
 
     - name: tfsec
-      uses: tfsec/tfsec-sarif-action@main
-      with:
-        sarif_file: tfsec.sarif
+      uses: aquasecurity/tfsec-action@v1.0.0
