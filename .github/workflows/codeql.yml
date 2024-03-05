@@ -82,14 +82,15 @@ jobs:
         category: "/language:${{matrix.language}}"
 
     - name: tfsec
-      id: tfsec_out
-      uses: aquasecurity/tfsec-action@v1.0.0
+      uses: tfsec/tfsec-sarif-action@master
       continue-on-error: true
       with:
-        soft_fail: true
+        sarif_file: tfsec.sarif
+        #soft_fail: true
+                
 
-    - name: Save Terraform Output to JSON File
-      uses: fishcharlie/CmdToFile@v1.0.0
+    - name: Upload SARIF file
+      uses: github/codeql-action/upload-sarif@v1
       with:
-        data: ${{ steps.tfsec_out.outputs.stdout }}
-        output: output.json
+        # Path to SARIF file relative to the root of the repository
+        sarif_file: tfsec.sarif
