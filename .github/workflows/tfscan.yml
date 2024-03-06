@@ -1,14 +1,3 @@
-# For most projects, this workflow file will not need changing; you simply need
-# to commit it to your repository.
-#
-# You may wish to alter this file to override the set of languages analyzed,
-# or to provide custom queries or build logic.
-#
-# ******** NOTE ********
-# We have attempted to detect the languages in your repository. Please check
-# the `language` matrix defined below to confirm you have the correct set of
-# supported CodeQL languages.
-#
 name: "TFSEC"
 
 on:
@@ -25,7 +14,9 @@ jobs:
     name: tfsec security scan
     runs-on: ubuntu-latest
     environment: qa
-
+    defaults:
+      run:
+        working-directory: ./staging
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -36,8 +27,8 @@ jobs:
       with:
         sarif_file: tfsec.sarif                
 
-    - name: Upload SARIF file
-      uses: github/codeql-action/upload-sarif@v2
-      with:
-        # Path to SARIF file relative to the root of the repository
-        sarif_file: tfsec.sarif
+    # - name: Upload SARIF file
+    #   uses: github/codeql-action/upload-sarif@v2
+    #   with:
+    #     # Path to SARIF file relative to the root of the repository
+    #     sarif_file: tfsec.sarif
