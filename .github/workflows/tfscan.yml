@@ -23,7 +23,7 @@ jobs:
 
     - name: tfsec
       uses: tfsec/tfsec-sarif-action@master
-      continue-on-error: true
+      #continue-on-error: true
       with:
         sarif_file: tfsec.sarif                
 
